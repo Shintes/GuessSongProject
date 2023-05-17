@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  web:
+    build: ./GuessSong
+    ports:
+     - 8080:80
+  api:
+    build: ./ItunesApi
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=DbGuessSongs;User=sa;Password=ItunesApi1!;
+  db:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ItunesApi1!
